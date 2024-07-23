@@ -26,6 +26,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cookieParser())
 app.use("/users",userRouter)
 app.use("/posts",postRouter)
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Hello from Vercel' });
+  });
 
 app.listen(5001, ()=>{
     console.log("App started")
