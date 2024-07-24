@@ -1,12 +1,26 @@
 import jwt from "jsonwebtoken";
 import multer from "multer";
-import fs from 'fs';
+import {CloudinaryStorage} from 'multer-storage-cloudinary'
+import { v2 as cloudinary } from "cloudinary"; 
 import Post from "../models/post.js";
 import path from "path";
+import 'dotenv/config';
 
-
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'uploads',
+    format: async (req, file) => 'jpg', 
+    public_id: (req, file) => Date.now() + '-' + file.originalname,
+  },
+});
 const upload = multer({ dest: 'uploads/' })
-const secret = 'jwt3456cd'
+const secret = process.env.JWT_SECRET
 
 export const posts = [upload.single('file'), 
     async (req,res)=>{
@@ -14,11 +28,7 @@ export const posts = [upload.single('file'),
             if (!req.file) {
                 return res.status(400).json({ error: 'File is missing' });
               }
-            const {originalname,path: filePath}= req.file;
-            const parts= originalname.split('.');
-            const ext=parts[parts.length-1]
-            const newPath=path.join('uploads', `${path.basename(filePath)}.${ext}`);
-            fs.renameSync(filePath,newPath);
+            const {path: fileUrl}= req.file;
     
             const {token} = req.cookies;
             jwt.verify(token,secret,{},async (err,info)=>{
@@ -28,7 +38,7 @@ export const posts = [upload.single('file'),
                     title,
                     summary,
                     content,
-                    cover: path.basename(newPath),
+                    cover: fileUrl,
                     author: info.id,
                 });
                 res.json(postDoc);
@@ -45,11 +55,8 @@ export const posts = [upload.single('file'),
             try{
               let newPath = null;
             if (req.file){
-                const {originalname,path: filePath}= req.file;
-                const ext= originalname.split('.').pop();
-                newPath =path.join('uploads',`${path.basename(filePath)}.${ext}`);
-                fs.renameSync(filePath,newPath);
-                newPath= path.basename(newPath);
+                const {path: fileUrl}= req.file;
+                newPath= fileUrl;
             }
     
             const {token}= req.cookies;
@@ -70,7 +77,7 @@ export const posts = [upload.single('file'),
           content,
         };
         if (newPath) {
-          updatedData.cover = newPath;
+          updatedData.cover = newPath ? newPath : postDoc.cover;
         }
           await postDoc.updateOne(updatedData);
               res.json(postDoc);   
