@@ -11,7 +11,7 @@ export default function EditPost(){
     const [redirect,setRedirect] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5001/posts/'+id)
+        fetch('https://blog-nine-phi-73.vercel.app/posts/'+id)
         .then (response=>{
             response.json().then(postInfo=>{
                 setTitle(postInfo.title)
@@ -31,7 +31,7 @@ export default function EditPost(){
         if (files?.[0]){
            data.set('file',files?.[0]) 
         }
-        const response = await fetch('http://localhost:5001/posts',{
+        const response = await fetch('https://blog-nine-phi-73.vercel.app/posts',{
             method: 'Put',
             body: data,
             credentials: "include",  
