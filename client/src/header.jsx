@@ -6,7 +6,7 @@ export default function Header() {
   const username= userInfo?.username
 
   useEffect(()=>{
-      fetch('http://localhost:5001/users/profile',{
+      fetch('https://blog-nine-phi-73.vercel.app/users/profile',{
         method: 'Get',
         credentials: 'include'
       }).then(response=>{
@@ -17,7 +17,7 @@ export default function Header() {
  },[])
 
  function logout (){
-   fetch('http://localhost:5001/users/logout',{
+   fetch('https://blog-nine-phi-73.vercel.app/users/logout',{
     method: 'Post',
     credentials: 'include'
    })
