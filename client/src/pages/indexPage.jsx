@@ -4,7 +4,7 @@ import Post from '../post.jsx'
 export default function IndexPage(){
     const [posts,setPosts]=useState([]);
     useEffect(()=>{
-        fetch('http://localhost:5001/posts',{
+        fetch('https://blog-nine-phi-73.vercel.app/posts',{
             method: 'Get',
         }).then(response=>{
             response.json().then(posts=>{
