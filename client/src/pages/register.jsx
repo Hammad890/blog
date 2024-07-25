@@ -6,7 +6,7 @@ export default function Register(){
 
     const handleRegister= async (e)=>{
         e.preventDefault();
-        let res =await fetch('http://localhost:5001/users/reg',{
+        let res =await fetch('https://blog-nine-phi-73.vercel.app/users/reg',{
             method: 'Post',
             body: JSON.stringify({username,password}),
             headers: {'Content-Type':'application/json'}
