@@ -15,7 +15,7 @@ callDb()
 const secret = process.env.JWT_SECRET;
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://blog-21zk.vercel.app",
     credentials: true,
 }))
 
