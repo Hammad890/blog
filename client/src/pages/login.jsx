@@ -10,7 +10,7 @@ export default function Login (){
     
     const handleLogin= async(e)=>{
         e.preventDefault();
-        let res = await fetch ('http://localhost:5001/users/login',{
+        let res = await fetch ('https://blog-nine-phi-73.vercel.app/users/login',{
             method: 'Post',
             body: JSON.stringify({username,password}),
             headers:{'Content-Type' : 'application/json'},
