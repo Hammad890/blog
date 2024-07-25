@@ -19,7 +19,7 @@ export default function CreatePost (){
         data.set('content',content);
         data.set('file',files[0]);
         e.preventDefault();
-        let res= fetch ('http://localhost:5001/posts',{
+        let res= fetch ('https://blog-nine-phi-73.vercel.app/posts',{
             method: 'Post',
             body: data,
             credentials: 'include',
