@@ -61,7 +61,8 @@ main{
     }
 div.post {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
+        grid-template-columns: unset;
     }
     div.post div.image {
         order: 1;
