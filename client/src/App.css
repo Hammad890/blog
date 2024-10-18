@@ -64,13 +64,11 @@ div.post {
         flex-direction: column;
     }
     div.post div.image {
-        order: 2;
         margin-top: 0;
         width: 100%;
     }
 
     div.post div.texts {
-        order: 1; 
         margin-bottom: 15px;
     }
 
